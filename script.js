@@ -28,7 +28,7 @@ var sent = false;
 var sentContent = "";
 var noLoad = true;
 var isJoin = false;
-
+var scrollOffset = 1.14;
 var crtMsg = 0;
 
 window.onload = function() {
@@ -119,9 +119,10 @@ docRef.onSnapshot((doc) => {
     }
     if (started) {
       window.scrollTo(0,document.body.scrollHeight);
+      scrollOffset = document.body.scrollHeight / window.scrollY;
       started = false;
     }
-    if (document.body.scrollHeight / 1.14 - window.scrollY <= 100) {
+    if (document.body.scrollHeight / scrollOffset - window.scrollY <= window.innerHeight / 5) {
       window.scrollTo(0,document.body.scrollHeight);
     }
   } else {
@@ -209,8 +210,7 @@ $('#user').on('keyup', function (e) {
             document.cookie = "user=" + id;
             document.getElementById("login").remove();
             document.getElementById("username").remove();
-            $("#actChat").fadeIn(0);
-            $("#loading").fadeIn(0);
+            $("#loadPanel").fadeIn(0);
             window.location.href = window.location.href;
             break;
           }
