@@ -121,6 +121,9 @@ docRef.onSnapshot((doc) => {
       window.scrollTo(0,document.body.scrollHeight);
       started = false;
     }
+    if (document.body.scrollHeight / 1.14 - window.scrollY <= 100) {
+      window.scrollTo(0,document.body.scrollHeight);
+    }
   } else {
     if (isJoin) {
       window.location.href = "https://chat.jingjingdev.repl.co/";
