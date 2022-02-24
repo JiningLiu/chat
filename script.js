@@ -11,22 +11,6 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 var provider = new firebase.auth.GoogleAuthProvider();
 
-firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-    var email = user.email;
-    console.log(email)
-  } else {
-    firebase.auth()
-      .getRedirectResult()
-      .then((result) => {
-        if (result.user != null) {
-          console.log(result.user.email);
-        }
-      });
-  }
-});
-
-
 var db = firebase.firestore();
 var docRef = window.location.search.includes('?id=') ? db.collection("chat").doc(window.location.search.replace("?id=", "")) : db.collection("chat").doc('10000000');
 var pplRef = window.location.search.includes('?id=') ? db.collection("chat").doc(window.location.search.replace("?id=", "")) : db.collection("chat").doc('10000000');
@@ -40,10 +24,37 @@ var isJoin = false;
 var scrollOffset = 1.14;
 var crtMsg = 0;
 
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    db.collection("user").doc(user.email).get()
+      .then((doc) => {
+        if (!doc.exists) {
+          console.log('sign up');
+        }
+      })
+  } else {
+    firebase.auth()
+      .getRedirectResult()
+      .then((result) => {
+        if (result.user != null) {
+          db.collection("user").doc(result.user.email).get()
+            .then((doc) => {
+              if (!doc.exists) {
+                console.log('sign up');
+              }
+            })
+        } else {
+          document.getElementById('indexMain').innerHTML = '<button style="margin-top: 7px; width: 155px;" onclick="signIn()">Sign Up</button>    <br>    <button style="margin-top: 7px; width: 155px;" onclick="signIn()">Log In</button>'
+          document.getElementById('indexFooter').innerHTML = '<br>    <h6 style="padding-top: 10px;">©2022 Candice. All rights reserved.</h6>'
+        }
+      });
+  }
+});
+
 window.onload = function() {
   const date = new Date();
-  if ((date.getHours() >= 18 || date.getHours() < 8 || date.getDay() >= 6) && document.cookie.includes('- Dev') == false && document.cookie.includes('- Dev') == false) {
-    document.querySelector('html').innerHTML = '<!DOCTYPE html> <html lang="en">   <head>     <meta charset="UTF-8">     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <title>CLOSED Chat for School</title>     <link rel="stylesheet" href="closed.css">   </head>   <body>     <h1>Chat for School is currently closed!</h1>    <h3>Schedule: </h3>     <ul>    <li>Weekdays: 8:00 AM - 6:00 PM CST</li>    <li>Weekend: Closed</li>    </ul>   </body> </html>';
+  if ((date.getHours() >= 18 || date.getHours() < 8 || date.getDay() >= 2) && document.cookie.includes('- Dev') == false && document.cookie.includes('- Dev') == false) {
+    document.querySelector('html').innerHTML = '<!DOCTYPE html> <html lang="en">   <head>     <meta charset="UTF-8">     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <title>CLOSED Chat for School</title>     <link rel="stylesheet" href="closed.css">   </head>   <body>     <h1>Chat for School is currently closed!</h1>    <h3>Schedule: </h3>     <ul>    <li>Workdays: 8:00 AM - 6:00 PM CST</li>    <li>Weekend/Holidays: Closed</li>    </ul>   </body> </html>';
   }
   $('#loadPanel').fadeOut(250);
   if (window.location.href.includes("chat.html")) {
