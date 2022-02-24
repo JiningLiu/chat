@@ -11,17 +11,20 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 var provider = new firebase.auth.GoogleAuthProvider();
 
-const user = firebase.auth().currentUser;
-
-if (!user) {
-  firebase.auth()
-    .getRedirectResult()
-    .then((result) => {
-      if (result.user != null) {
-        console.log(result.user.email);
-      }
-    });
-}
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    var email = user.email;
+    console.log(email)
+  } else {
+    firebase.auth()
+      .getRedirectResult()
+      .then((result) => {
+        if (result.user != null) {
+          console.log(result.user.email);
+        }
+      });
+  }
+});
 
 
 var db = firebase.firestore();
@@ -73,7 +76,7 @@ window.onload = function() {
 }
 
 docRef.onSnapshot((doc) => {
-  if (doc.exists) {
+  if (doc.exists && window.location.search.includes('?id=')) {
     document.getElementById("chat").innerHTML = '';
     document.getElementById("loading").innerHTML = "Chat for School";
     $('#redirectCheck').fadeIn(0);
