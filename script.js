@@ -7,9 +7,16 @@ const firebaseConfig = {
   appId: "1:794185034141:web:5f5722ff62572c029c6774",
   measurementId: "G-JZZBEQMVWH"
 };
-
 const app = firebase.initializeApp(firebaseConfig);
 var provider = new firebase.auth.GoogleAuthProvider();
+
+firebase.auth()
+  .getRedirectResult()
+  .then((result) => {
+    if (result.user != null) {
+      console.log(result.user.email);
+    }
+  });
 
 var db = firebase.firestore();
 var docRef = db.collection("chat").doc(window.location.search.replace("?id=", ""));
@@ -25,16 +32,12 @@ var isJoin = false;
 var crtMsg = 0;
 
 window.onload = function() {
-  console.log('1');
   const date = new Date();
   if ((date.getHours() >= 18 || date.getHours() < 8 || date.getDay() >= 6) && document.cookie.includes('- Dev') == false && document.cookie.includes('- Dev') == false) {
     document.querySelector('html').innerHTML = '<!DOCTYPE html> <html lang="en">   <head>     <meta charset="UTF-8">     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <title>CLOSED Chat for School</title>     <link rel="stylesheet" href="closed.css">   </head>   <body>     <h1>Chat for School is currently closed!</h1>    <h3>Schedule: </h3>     <ul>    <li>Weekdays: 8:00 AM - 6:00 PM CST</li>    <li>Weekend: Closed</li>    </ul>   </body> </html>';
   }
   $('#loadPanel').fadeOut(250);
   if (window.location.href.includes("chat.html")) {
-    if (!document.cookie.includes('user=')) {
-      window.location.href = "https://chat.jingjingdev.repl.co/";
-    }
     if (window.location.search.includes("?id=")) {
       if (isNaN(window.location.search.replace("?id=", ""))) {
         window.location.href = "https://chat.jingjingdev.repl.co/";
@@ -64,12 +67,6 @@ window.onload = function() {
 }
 
 docRef.onSnapshot((doc) => {
-  for(var i = 0; i < Infinity; i ++) {
-    if (!noLoad) {
-      break;
-    }
-    wait(100);
-  }
   if (doc.exists) {
     document.getElementById("chat").innerHTML = '';
     document.getElementById("loading").innerHTML = "Chat for School";
@@ -136,23 +133,8 @@ docRef.onSnapshot((doc) => {
   }
 });
 
-db.collection("ban").doc(document.cookie.replace("user=", "")).onSnapshot((doc) => {
-  if (doc.exists) {
-    if (doc.data()[0]) {
-      
-    }
-  }
-});
-
 function signIn() {
   firebase.auth().signInWithRedirect(provider);
-  firebase.auth()
-    .getRedirectResult()
-    .then((result) => {
-      console.log(result.user.email);
-    }).catch((error) => {
-      alert('Sign In Failed!');
-    });
 }
 
 document.addEventListener('contextmenu', function(e) {
@@ -226,7 +208,7 @@ $('#user').on('keyup', function (e) {
             document.getElementById("username").remove();
             $("#actChat").fadeIn(0);
             $("#loading").fadeIn(0);
-            load();      
+            window.location.href = window.location.href;
             break;
           }
           if (doc.data()[i] + "" == document.getElementById("user").value) {
@@ -317,12 +299,4 @@ function noSend(word) {
     }
   }
   return false;
-}
-
-function wait(ms) {
-  var start = Date.now(),
-  now = start;
-  while (now - start < ms) {
-  now = Date.now();
-  }
 }
