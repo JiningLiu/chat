@@ -9,6 +9,7 @@ const firebaseConfig = {
 };
 
 const app = firebase.initializeApp(firebaseConfig);
+var provider = new firebase.auth.GoogleAuthProvider();
 
 var db = firebase.firestore();
 var docRef = db.collection("chat").doc(window.location.search.replace("?id=", ""));
@@ -24,12 +25,22 @@ var isJoin = false;
 var crtMsg = 0;
 
 window.onload = function() {
+  firebase.auth()
+    .getRedirectResult()
+    .then((result) => {
+      console.log(result.user);
+    }).catch((error) => {
+      alert('Sign In Failed!');
+    });
   const date = new Date();
   if ((date.getHours() >= 18 || date.getHours() < 8 || date.getDay() >= 6) && document.cookie.includes('- Dev') == false && document.cookie.includes('- Dev') == false) {
     document.querySelector('html').innerHTML = '<!DOCTYPE html> <html lang="en">   <head>     <meta charset="UTF-8">     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <title>CLOSED Chat for School</title>     <link rel="stylesheet" href="closed.css">   </head>   <body>     <h1>Chat for School is currently closed!</h1>    <h3>Schedule: </h3>     <ul>    <li>Weekdays: 8:00 AM - 6:00 PM CST</li>    <li>Weekend: Closed</li>    </ul>   </body> </html>';
   }
   $('#loadPanel').fadeOut(250);
   if (window.location.href.includes("chat.html")) {
+    if (!document.cookie.includes('user=')) {
+      window.location.href = "https://chat.jingjingdev.repl.co/";
+    }
     if (window.location.search.includes("?id=")) {
       if (isNaN(window.location.search.replace("?id=", ""))) {
         window.location.href = "https://chat.jingjingdev.repl.co/";
@@ -139,92 +150,8 @@ db.collection("ban").doc(document.cookie.replace("user=", "")).onSnapshot((doc) 
   }
 });
 
-function load(isJoin) {
-  setTimeout(() => {
-    docRef.get().then((doc) => {
-      if (doc.exists) {
-        if (window.location.search.includes("?id=")) {
-          docRef = db.collection("chat").doc(window.location.search.replace("?id=", ""));
-        } else {
-          docRef = db.collection("chat").doc(window.location.search.replace("?join=", ""));
-        }
-        if (window.location.search.includes("?id=")) {
-          document.getElementById("chatID").innerHTML = "Chat ID: " + window.location.search.replace("?id=", "");
-        } else {
-          document.getElementById("chatID").innerHTML = "Chat ID: " + window.location.search.replace("?join=", "");
-        }
-        document.getElementById("chat").innerHTML = '';
-        document.getElementById("loading").innerHTML = "Chat for School";
-        $('#redirectCheck').fadeIn(0);
-        $('#lowpdiv').fadeIn(0);
-        var lastItem = 0;
-        for(var i = 1; i <= Infinity; i ++) {
-          const para = document.createElement("h3");
-          const node = document.createTextNode(doc.data()[i]);
-          const para1 = document.createElement("h6");
-          const node1 = document.createTextNode(doc.data()[i + "p"]);
-          if (doc.data()[i + "p"] == id) {
-            para.style.textAlign = "right";
-            para1.style.textAlign = "right";
-            para.style.paddingLeft = "8vw";
-            para1.style.paddingLeft = "8vw";
-          } else {
-            para.style.paddingRight = "8vw";
-            para1.style.paddingRight = "8vw";
-          }
-          para.appendChild(node);
-          para1.appendChild(node1);
-          const element = document.getElementById("chat");
-          if ("" + doc.data()[i + "p"] == "" + doc.data()[i - 1 + "p"]) {
-            element.appendChild(para);
-          } else {
-            element.appendChild(para1);
-            element.appendChild(para);
-          }
-          if ("" + doc.data()[i + 1] == "undefined") {
-            if (doc.data()[i + "p"].includes("☆") && ("" + Array.from(doc.data()).pop()).includes(doc.data()[i + "p"]) == false) {
-              const para2 = document.createElement("h6");
-              const node2 = document.createTextNode(doc.data()[i + "p"] + ' is a verified moderator');
-              para2.style.textAlign = "center";
-              para2.style.paddingBottom = "80px";
-              para2.appendChild(node2);
-              element.appendChild(para2);
-            } else {
-              para.style.paddingBottom = "80px";
-            }
-            $('#msg').fadeIn(0);
-            crtMsg = i + 1;
-            lastItem = i;
-            break;
-          }
-        }
-        if (doc.data()[lastItem] + "" == sentContent && sent) {
-          sent = false;
-          window.scrollTo(0,document.body.scrollHeight);
-        }
-        if (started) {
-          window.scrollTo(0,document.body.scrollHeight);
-          started = false;
-        }
-      } else {
-        if (isJoin) {
-          window.location.href = "https://chat.jingjingdev.repl.co/";
-        } else {
-          docRef.set({
-            "1": "Chat created by " + id, 
-            "1p": id
-          }, { merge: true });
-        }
-      }
-    }).catch((error) => {
-      document.getElementById("loading").innerHTML = "Unable to load chat! Error: " + error
-    });
-    if (window.location.search.includes("?join=")) {
-      load(true);
-    } else {
-      load(false);
-    }
-  }, wait);
+function signIn() {
+  firebase.auth().signInWithRedirect(provider);
 }
 
 document.addEventListener('contextmenu', function(e) {
