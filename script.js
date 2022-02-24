@@ -25,6 +25,7 @@ var isJoin = false;
 var crtMsg = 0;
 
 window.onload = function() {
+  console.log('1');
   const date = new Date();
   if ((date.getHours() >= 18 || date.getHours() < 8 || date.getDay() >= 6) && document.cookie.includes('- Dev') == false && document.cookie.includes('- Dev') == false) {
     document.querySelector('html').innerHTML = '<!DOCTYPE html> <html lang="en">   <head>     <meta charset="UTF-8">     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <title>CLOSED Chat for School</title>     <link rel="stylesheet" href="closed.css">   </head>   <body>     <h1>Chat for School is currently closed!</h1>    <h3>Schedule: </h3>     <ul>    <li>Weekdays: 8:00 AM - 6:00 PM CST</li>    <li>Weekend: Closed</li>    </ul>   </body> </html>';
@@ -145,6 +146,13 @@ db.collection("ban").doc(document.cookie.replace("user=", "")).onSnapshot((doc) 
 
 function signIn() {
   firebase.auth().signInWithRedirect(provider);
+  firebase.auth()
+    .getRedirectResult()
+    .then((result) => {
+      console.log(result.user.email);
+    }).catch((error) => {
+      alert('Sign In Failed!');
+    });
 }
 
 document.addEventListener('contextmenu', function(e) {
