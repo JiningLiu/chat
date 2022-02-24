@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>My Apps</title>
+    <link href="style.css" rel="stylesheet" type="text/css"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="//cdn.classlink.com/production/launchpad/resources/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="//cdn.classlink.com/production/launchpad/resources/images/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="//cdn.classlink.com/production/launchpad/resources/images/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/x-icon" href="https://myapps.classlink.com/favicon.ico">
+  </head>
+  <body>
+    <svg id="loadPanel" style="position: fixed; margin: 0; padding: 0; z-index: 99999; width: 100vw; height: 100vh;">
+      <rect style="fill:rgb(0,0,0); stroke-width:0; 100vw; height: 100vh;"/>
+    </svg>
+    <h2>Chat for School</h2>
+    <h2 id="welcome" style="text-align: right;" onclick="modList()">Welcome!</h2>
+    <div class="center">
+      <br>
+      <button onclick="create()" style="transform: scale(1.25); width: 124px; margin-bottom: 10px;">Create a chat</button>
+      <br>
+      <input type="text" id="join" class="join" maxlength="8" placeholder="8-digit ID">
+      <button onclick="join()">Join</button>
+      <br>
+      <button style="margin-top: 7px; width: 155px;" onclick="window.location.href = 'https://chat.jingjingdev.repl.co/chat.html?id=10000000'">Public Chat Room</button>
+      <br>
+      <br>
+      <h6>v1.1.0 (9)</h6>
+    </div>
+    <div class="center" style="top: 92.5%;">
+      <button onclick="reset()" id="reset">Reset</button>
+      <h6 style="padding-top: 10px;">©2022 Candice. All rights reserved.</h6>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.1/firebase-app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.1/firebase-firestore.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="closed.js"></script>
+    <script src="create.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

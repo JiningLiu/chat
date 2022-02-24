@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>My Apps</title>
+    <link href="style.css" rel="stylesheet" type="text/css"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="//cdn.classlink.com/production/launchpad/resources/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="//cdn.classlink.com/production/launchpad/resources/images/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/x-icon" href="https://myapps.classlink.com/favicon.ico">
+  </head>
+  <body>
+    <svg id="loadPanel" style="position: fixed; margin: 0; padding: 0; z-index: 99999; width: 100vw; height: 100vh;">
+      <rect style="fill:rgb(0,0,0); stroke-width:0; 100vw; height: 100vh;"/>
+    </svg>
+    <a href="https://chat.jingjingdev.repl.co/" id="username" style="text-decoration: none; color: white;">Enter Username Below</a>
+    <div id="login">
+      <br>
+      <input type="text" id="user" name="user" maxlength="40" autocomplete="none" placeholder="Username">
+    </div>
+    <a href="https://chat.jingjingdev.repl.co/" style="text-decoration: none; color: white; display: none;" id="loading">Loading...</a>
+    <h2 id="chatID" style="text-align: right; display: none;">Chat for School</h2>
+    <div id="actChat" style="display: none;">
+      <div id="chat" style="padding: 0; padding-top: 50px"></div>
+      <input type="text" id="msg" name="msg" maxlength="200" placeholder="Message" style="display: none;" autocomplete="none">
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.1/firebase-app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.1/firebase-firestore.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="closed.js"></script>
+    <script src="create.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
