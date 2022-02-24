@@ -7,20 +7,26 @@ const firebaseConfig = {
   appId: "1:794185034141:web:5f5722ff62572c029c6774",
   measurementId: "G-JZZBEQMVWH"
 };
+
 const app = firebase.initializeApp(firebaseConfig);
 var provider = new firebase.auth.GoogleAuthProvider();
 
-firebase.auth()
-  .getRedirectResult()
-  .then((result) => {
-    if (result.user != null) {
-      console.log(result.user.email);
-    }
-  });
+const user = firebase.auth().currentUser;
+
+if (!user) {
+  firebase.auth()
+    .getRedirectResult()
+    .then((result) => {
+      if (result.user != null) {
+        console.log(result.user.email);
+      }
+    });
+}
+
 
 var db = firebase.firestore();
-var docRef = db.collection("chat").doc(window.location.search.replace("?id=", ""));
-var pplRef = db.collection("ppl").doc(window.location.search.replace("?id=", ""));
+var docRef = window.location.search.includes('?id=') ? db.collection("chat").doc(window.location.search.replace("?id=", "")) : db.collection("chat").doc('10000000');
+var pplRef = window.location.search.includes('?id=') ? db.collection("chat").doc(window.location.search.replace("?id=", "")) : db.collection("chat").doc('10000000');
 var id = "";
 var started = true;
 var wait = 1000;
