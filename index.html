@@ -10,7 +10,7 @@
     <link rel="icon" type="image/png" href="//cdn.classlink.com/production/launchpad/resources/images/favicon/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/x-icon" href="https://myapps.classlink.com/favicon.ico">
   </head>
-  <body>
+  <body onload="firebase.auth()     .getRedirectResult()     .then((result) => {       console.log(result.user.email);     }).catch((error) => {       alert('Sign In Failed!');     });">
     <svg id="loadPanel" style="position: fixed; margin: 0; padding: 0; z-index: 99999; width: 100vw; height: 100vh;">
       <rect style="fill:rgb(0,0,0); stroke-width:0; width: 100vw; height: 100vh;"/>
     </svg>
