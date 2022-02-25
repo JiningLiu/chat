@@ -23,13 +23,15 @@ var noLoad = true;
 var isJoin = false;
 var scrollOffset = 1.14;
 var crtMsg = 0;
+var email = '';
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
+    email = user.email;
     db.collection("user").doc(user.email).get()
       .then((doc) => {
         if (!doc.exists) {
-          console.log('sign up');
+          document.getElementById('indexMain').innerHTML = '<h4>Create a username</h4>      <br>       <input type="text" id="username" maxlength="20" placeholder="Username" style="width: 200px;   height: 20px;   background-color: #FFFFFF;   border: none;   color: black;   padding: 5px 10px;   text-align: center;   text-decoration: none;   display: inline-block;   border-radius: 6px;   transition-duration: 500ms;">';
         }
       })
   } else {
@@ -37,6 +39,7 @@ firebase.auth().onAuthStateChanged((user) => {
       .getRedirectResult()
       .then((result) => {
         if (result.user != null) {
+          email = result.user.email;
           db.collection("user").doc(result.user.email).get()
             .then((doc) => {
               if (!doc.exists) {
@@ -51,11 +54,13 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 });
 
+document.getElementById('indexMain').innerHTML = '<h4>Create a username</h4>      <br>       <input type="text" id="username" maxlength="20" placeholder="Username" style="width: 200px;   height: 20px;   background-color: #FFFFFF;   border: none;   color: black;   padding: 5px 10px;   text-align: center;   text-decoration: none;   display: inline-block;   border-radius: 6px;   transition-duration: 500ms;">';
+
 window.onload = function() {
-  const date = new Date();
-  if ((date.getHours() >= 18 || date.getHours() < 8 || date.getDay() >= 6) && document.cookie.includes('- Dev') == false && document.cookie.includes('- Dev') == false) {
-    document.querySelector('html').innerHTML = '<!DOCTYPE html> <html lang="en">   <head>     <meta charset="UTF-8">     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <title>CLOSED Chat for School</title>     <link rel="stylesheet" href="closed.css">   </head>   <body>     <h1>Chat for School is currently closed!</h1>    <h3>Schedule: </h3>     <ul>    <li>Workdays: 8:00 AM - 6:00 PM CST</li>    <li>Weekend/Holidays: Closed</li>    </ul>   </body> </html>';
-  }
+  // const date = new Date();
+  // if ((date.getHours() >= 18 || date.getHours() < 8 || date.getDay() >= 6) && document.cookie.includes('- Dev') == false && document.cookie.includes('- Dev') == false) {
+  //   document.querySelector('html').innerHTML = '<!DOCTYPE html> <html lang="en">   <head>     <meta charset="UTF-8">     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <title>CLOSED Chat for School</title>     <link rel="stylesheet" href="closed.css">   </head>   <body>     <h1>Chat for School is currently closed!</h1>    <h3>Schedule: </h3>     <ul>    <li>Workdays: 8:00 AM - 6:00 PM CST</li>    <li>Weekend/Holidays: Closed</li>    </ul>   </body> </html>';
+  // }
   $('#loadPanel').fadeOut(250);
   if (window.location.href.includes("chat.html")) {
     if (window.location.search.includes("?id=")) {
@@ -149,17 +154,16 @@ docRef.onSnapshot((doc) => {
     if (document.body.scrollHeight / scrollOffset - window.scrollY <= window.innerHeight / 5) {
       window.scrollTo(0,document.body.scrollHeight);
     }
+  } else {
+    if (isJoin) {
+      window.location.href = "https://chat.jingjingdev.repl.co/";
+    } else {
+      docRef.set({
+        "1": "Chat created by " + id, 
+        "1p": id
+      }, { merge: true });
+    }
   }
-  // else {
-  //   if (isJoin) {
-  //     window.location.href = "https://chat.jingjingdev.repl.co/";
-  //   } else {
-  //     docRef.set({
-  //       "1": "Chat created by " + id, 
-  //       "1p": id
-  //     }, { merge: true });
-  //   }
-  // }
 });
 
 function signIn() {
@@ -207,40 +211,34 @@ $('#msg').on('keyup', function (e) {
       }
     }).catch((error) => {});
     const crtPerson = crtMsg + "p"
-    // docRef.set({
-    //   [crtMsg]: document.getElementById("msg").value, 
-    //   [crtPerson]: id
-    // }, { merge: true });
+    docRef.set({
+      [crtMsg]: document.getElementById("msg").value, 
+      [crtPerson]: id
+    }, { merge: true });
     sent = true;
     sentContent = document.getElementById("msg").value;
     document.getElementById("msg").value = "";
   }
 });
 
-$('#user').on('keyup', function (e) {
+$('#username').on('keyup', function (e) {
   if (noSend(document.getElementById("user").value)) {
     document.getElementById("user").value = "";
     window.location.href = './no.html';
     fail;
   }
   if (e.key === 'Enter' || e.keyCode === 13) {
-    pplRef.get().then((doc) => {
-      if (doc.exists && document.getElementById("user").value.toLowerCase().includes("username already taken") == false && document.getElementById("user").value.toLowerCase().includes("invalid") == false && document.getElementById("user").value.toLowerCase().includes("jining") == false && document.getElementById("user").value.toLowerCase().includes("- mod") == false && document.getElementById("user").value.toLowerCase().includes("- dev") == false && document.getElementById("user").value.toLowerCase().includes("☆") == false && alphanumeric(document.getElementById("user").value)) {
+    db.collection("username").doc('default').get().then((doc) => {
+      if (doc.exists && document.getElementById("username").value.toLowerCase().includes("username already taken") == false && document.getElementById("user").value.toLowerCase().includes("invalid") == false && document.getElementById("user").value.toLowerCase().includes("jining") == false && document.getElementById("user").value.toLowerCase().includes("- mod") == false && document.getElementById("user").value.toLowerCase().includes("- dev") == false && document.getElementById("user").value.toLowerCase().includes("☆") == false && alphanumeric(document.getElementById("user").value)) {
         for(var i = 1; i <= Infinity; i ++) {
           if ("" + doc.data()[i] == "undefined") {
-            // pplRef.set({
-            //   [i]: document.getElementById("user").value
-            // }, { merge: true });
-            id = document.getElementById("user").value;
-            document.cookie = "user=" + id;
-            document.getElementById("login").remove();
-            document.getElementById("username").remove();
-            $("#loadPanel").fadeIn(0);
-            window.location.href = window.location.href;
+            // add username to list db.collection("username").doc('default').set
+            // add username to user db.collection("user").doc(email).set
             break;
           }
-          if (doc.data()[i] + "" == document.getElementById("user").value) {
-            document.getElementById("user").value = "Username already taken!"
+          if (doc.data()[i] + "" == document.getElementById("username").value) {
+            document.getElementById("username").value = '';
+            alert('Username already taken!');
             break;
           }
         }
