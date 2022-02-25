@@ -14,7 +14,7 @@ var provider = new firebase.auth.GoogleAuthProvider();
 var db = firebase.firestore();
 var docRef = window.location.search.includes('?id=') ? db.collection("chat").doc(window.location.search.replace("?id=", "")) : db.collection("chat").doc('10000000');
 var pplRef = window.location.search.includes('?id=') ? db.collection("chat").doc(window.location.search.replace("?id=", "")) : db.collection("chat").doc('10000000');
-var id = "";
+var id = document.cookie == '' ? '' : document.cookie.replace('user=', '');
 var started = true;
 var wait = 1000;
 var sent = false;
@@ -53,7 +53,7 @@ firebase.auth().onAuthStateChanged((user) => {
 
 window.onload = function() {
   const date = new Date();
-  if ((date.getHours() >= 18 || date.getHours() < 8 || date.getDay() >= 2) && document.cookie.includes('- Dev') == false && document.cookie.includes('- Dev') == false) {
+  if ((date.getHours() >= 18 || date.getHours() < 8 || date.getDay() >= 6) && document.cookie.includes('- Dev') == false && document.cookie.includes('- Dev') == false) {
     document.querySelector('html').innerHTML = '<!DOCTYPE html> <html lang="en">   <head>     <meta charset="UTF-8">     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <title>CLOSED Chat for School</title>     <link rel="stylesheet" href="closed.css">   </head>   <body>     <h1>Chat for School is currently closed!</h1>    <h3>Schedule: </h3>     <ul>    <li>Workdays: 8:00 AM - 6:00 PM CST</li>    <li>Weekend/Holidays: Closed</li>    </ul>   </body> </html>';
   }
   $('#loadPanel').fadeOut(250);
@@ -83,11 +83,15 @@ window.onload = function() {
       $('#chatID').fadeIn(0);
       noLoad = false;
     }
+  } else {
+    if ('' + document.cookie != '') { 
+      document.getElementById('welcome').innerHTML = 'Welcome back, ' + document.cookie.replace('user=', '') + '!'
+    }
   }
 }
 
 docRef.onSnapshot((doc) => {
-  if (doc.exists && window.location.search.includes('?id=')) {
+  if (doc.exists && window.location.href.includes('?id=')) {
     document.getElementById("chat").innerHTML = '';
     document.getElementById("loading").innerHTML = "Chat for School";
     $('#redirectCheck').fadeIn(0);
@@ -145,16 +149,17 @@ docRef.onSnapshot((doc) => {
     if (document.body.scrollHeight / scrollOffset - window.scrollY <= window.innerHeight / 5) {
       window.scrollTo(0,document.body.scrollHeight);
     }
-  } else {
-    if (isJoin) {
-      window.location.href = "https://chat.jingjingdev.repl.co/";
-    } else {
-      docRef.set({
-        "1": "Chat created by " + id, 
-        "1p": id
-      }, { merge: true });
-    }
   }
+  // else {
+  //   if (isJoin) {
+  //     window.location.href = "https://chat.jingjingdev.repl.co/";
+  //   } else {
+  //     docRef.set({
+  //       "1": "Chat created by " + id, 
+  //       "1p": id
+  //     }, { merge: true });
+  //   }
+  // }
 });
 
 function signIn() {
@@ -202,10 +207,10 @@ $('#msg').on('keyup', function (e) {
       }
     }).catch((error) => {});
     const crtPerson = crtMsg + "p"
-    docRef.set({
-      [crtMsg]: document.getElementById("msg").value, 
-      [crtPerson]: id
-    }, { merge: true });
+    // docRef.set({
+    //   [crtMsg]: document.getElementById("msg").value, 
+    //   [crtPerson]: id
+    // }, { merge: true });
     sent = true;
     sentContent = document.getElementById("msg").value;
     document.getElementById("msg").value = "";
@@ -223,9 +228,9 @@ $('#user').on('keyup', function (e) {
       if (doc.exists && document.getElementById("user").value.toLowerCase().includes("username already taken") == false && document.getElementById("user").value.toLowerCase().includes("invalid") == false && document.getElementById("user").value.toLowerCase().includes("jining") == false && document.getElementById("user").value.toLowerCase().includes("- mod") == false && document.getElementById("user").value.toLowerCase().includes("- dev") == false && document.getElementById("user").value.toLowerCase().includes("☆") == false && alphanumeric(document.getElementById("user").value)) {
         for(var i = 1; i <= Infinity; i ++) {
           if ("" + doc.data()[i] == "undefined") {
-            pplRef.set({
-              [i]: document.getElementById("user").value
-            }, { merge: true });
+            // pplRef.set({
+            //   [i]: document.getElementById("user").value
+            // }, { merge: true });
             id = document.getElementById("user").value;
             document.cookie = "user=" + id;
             document.getElementById("login").remove();
