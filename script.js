@@ -31,6 +31,9 @@ firebase.auth().onAuthStateChanged((user) => {
     db.collection("user").doc(user.email).get()
       .then((doc) => {
         if (!doc.exists) {
+          if (window.location.pathname != '/') {
+            window.location.href = '.';
+          }
           document.getElementById('indexMain').innerHTML = '<h4>Create a username</h4>      <br>       <input type="text" id="username" maxlength="20" placeholder="Username" style="width: 200px;   height: 20px;   background-color: #FFFFFF;   border: none;   color: black;   padding: 5px 10px;   text-align: center;   text-decoration: none;   display: inline-block;   border-radius: 6px;   transition-duration: 500ms;">';
         }
       })
@@ -43,10 +46,16 @@ firebase.auth().onAuthStateChanged((user) => {
           db.collection("user").doc(result.user.email).get()
             .then((doc) => {
               if (!doc.exists) {
-                console.log('sign up');
+                if (window.location.pathname != '/') {
+                  window.location.href = '.';
+                }
+                document.getElementById('indexMain').innerHTML = '<h4>Create a username</h4>      <br>       <input type="text" id="username" maxlength="20" placeholder="Username" style="width: 200px;   height: 20px;   background-color: #FFFFFF;   border: none;   color: black;   padding: 5px 10px;   text-align: center;   text-decoration: none;   display: inline-block;   border-radius: 6px;   transition-duration: 500ms;">';
               }
             })
         } else {
+          if (window.location.pathname != '/') {
+            window.location.href = '.';
+          }
           document.getElementById('indexMain').innerHTML = '<button style="margin-top: 7px; width: 155px;" onclick="signIn()">Sign Up</button>    <br>    <button style="margin-top: 7px; width: 155px;" onclick="signIn()">Log In</button>'
           document.getElementById('indexFooter').innerHTML = '<br>    <h6 style="padding-top: 10px;">©2022 Candice. All rights reserved.</h6>'
         }
@@ -227,11 +236,16 @@ $('#username').on('keyup', function (e) {
   }
   if (e.key === 'Enter' || e.keyCode === 13) {
     db.collection("username").doc('default').get().then((doc) => {
-      if (doc.exists && document.getElementById("username").value.toLowerCase().includes("username already taken") == false && document.getElementById("user").value.toLowerCase().includes("invalid") == false && document.getElementById("user").value.toLowerCase().includes("jining") == false && document.getElementById("user").value.toLowerCase().includes("- mod") == false && document.getElementById("user").value.toLowerCase().includes("- dev") == false && document.getElementById("user").value.toLowerCase().includes("☆") == false && alphanumeric(document.getElementById("user").value)) {
+      if (doc.exists && document.getElementById("username").value.toLowerCase().includes("username") == false && document.getElementById("username").value.toLowerCase().includes("invalid") == false && document.getElementById("username").value.toLowerCase().includes("jining") == false && document.getElementById("username").value.toLowerCase().includes("- mod") == false && document.getElementById("username").value.toLowerCase().includes("- dev") == false && document.getElementById("username").value.toLowerCase().includes("☆") == false && alphanumeric(document.getElementById("username").value)) {
         for(var i = 1; i <= Infinity; i ++) {
           if ("" + doc.data()[i] == "undefined") {
-            // add username to list db.collection("username").doc('default').set
-            // add username to user db.collection("user").doc(email).set
+            db.collection("username").doc('default').set({
+              [i]: document.getElementById("username").value
+            }, { merge: true });
+            db.collection("user").doc(email).set({
+              'username': document.getElementById("username").value
+            }, { merge: true });
+            window.location.href = '.';
             break;
           }
           if (doc.data()[i] + "" == document.getElementById("username").value) {
@@ -323,4 +337,16 @@ function noSend(word) {
     }
   }
   return false;
+}
+
+function notifyRequest() {
+  if (!("Notification" in window)) {
+    alert("This browser does not support desktop notification");
+  } else if (Notification.permission == "denied") {
+    Notification.requestPermission().then(function (permission) {
+      if (permission === "granted") {
+        var notification = new Notification("Hi there! Welcome to Chat for School!");
+      }
+    });
+  }
 }
