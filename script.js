@@ -13,7 +13,7 @@ var provider = new firebase.auth.GoogleAuthProvider();
 
 var db = firebase.firestore();
 var docRef = window.location.search.includes('?id=') ? db.collection("chat").doc(window.location.search.replace("?id=", "")) : db.collection("chat").doc('10000000');
-var pplRef = window.location.search.includes('?id=') ? db.collection("chat").doc(window.location.search.replace("?id=", "")) : db.collection("chat").doc('10000000');
+var pplRef = window.location.search.includes('?id=') ? db.collection("ppl").doc(window.location.search.replace("?id=", "")) : db.collection("chat").doc('10000000');
 var id = document.cookie == '' ? '' : document.cookie.replace('user=', '');
 var started = true;
 var wait = 1000;
@@ -24,34 +24,19 @@ var isJoin = false;
 var scrollOffset = 1.14;
 var crtMsg = 0;
 var email = '';
+var username = '';
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     email = user.email;
-    db.collection("user").doc(user.email).get()
-      .then((doc) => {
-        if (!doc.exists) {
-          if (window.location.pathname != '/') {
-            window.location.href = '.';
-          }
-          document.getElementById('indexMain').innerHTML = '<h4>Create a username</h4>      <br>       <input type="text" id="username" maxlength="20" placeholder="Username" style="width: 200px;   height: 20px;   background-color: #FFFFFF;   border: none;   color: black;   padding: 5px 10px;   text-align: center;   text-decoration: none;   display: inline-block;   border-radius: 6px;   transition-duration: 500ms;">';
-        }
-      })
+    checkUser(user);
   } else {
     firebase.auth()
       .getRedirectResult()
       .then((result) => {
         if (result.user != null) {
           email = result.user.email;
-          db.collection("user").doc(result.user.email).get()
-            .then((doc) => {
-              if (!doc.exists) {
-                if (window.location.pathname != '/') {
-                  window.location.href = '.';
-                }
-                document.getElementById('indexMain').innerHTML = '<h4>Create a username</h4>      <br>       <input type="text" id="username" maxlength="20" placeholder="Username" style="width: 200px;   height: 20px;   background-color: #FFFFFF;   border: none;   color: black;   padding: 5px 10px;   text-align: center;   text-decoration: none;   display: inline-block;   border-radius: 6px;   transition-duration: 500ms;">';
-              }
-            })
+          checkUser(user);
         } else {
           if (window.location.pathname != '/') {
             window.location.href = '.';
@@ -81,97 +66,142 @@ window.onload = function() {
     pplRef.set({
       1: "created"
     }, { merge: true });
-    if (document.cookie != "") {
-      id = document.cookie.replace("user=", "");
-      if (id.includes("- Dev") || id.includes("- Mod")) {
-        id = id.replace('- Dev','');
-        id = id.replace('- Mod','');
-        id += "☆";
-      }
-      document.getElementById("login").remove();
-      document.getElementById("username").remove();
-      $("#actChat").fadeIn(0);
+    $("#actChat").fadeIn(0);
       $("#loading").fadeIn(0);
       $('#chatID').fadeIn(0);
       noLoad = false;
-    }
-  } else {
-    if ('' + document.cookie != '') { 
-      document.getElementById('welcome').innerHTML = 'Welcome back, ' + document.cookie.replace('user=', '') + '!'
-    }
   }
 }
 
-docRef.onSnapshot((doc) => {
-  if (doc.exists && window.location.href.includes('?id=')) {
-    document.getElementById("chat").innerHTML = '';
-    document.getElementById("loading").innerHTML = "Chat for School";
-    $('#redirectCheck').fadeIn(0);
-    $('#lowpdiv').fadeIn(0);
-    var lastItem = 0;
-    for(var i = 1; i <= Infinity; i ++) {
-      const para = document.createElement("h3");
-      const node = document.createTextNode(doc.data()[i]);
-      const para1 = document.createElement("h6");
-      const node1 = document.createTextNode(doc.data()[i + "p"]);
-      if (doc.data()[i + "p"] == id) {
-        para.style.textAlign = "right";
-        para1.style.textAlign = "right";
-        para.style.paddingLeft = "8vw";
-        para1.style.paddingLeft = "8vw";
-      } else {
-        para.style.paddingRight = "8vw";
-        para1.style.paddingRight = "8vw";
-      }
-      para.appendChild(node);
-      para1.appendChild(node1);
-      const element = document.getElementById("chat");
-      if ("" + doc.data()[i + "p"] == "" + doc.data()[i - 1 + "p"]) {
-        element.appendChild(para);
-      } else {
-        element.appendChild(para1);
-        element.appendChild(para);
-      }
-      if ("" + doc.data()[i + 1] == "undefined") {
-        if (doc.data()[i + "p"].includes("☆") && ("" + Array.from(doc.data()).pop()).includes(doc.data()[i + "p"]) == false) {
-          const para2 = document.createElement("h6");
-          const node2 = document.createTextNode(doc.data()[i + "p"] + ' is a verified moderator');
-          para2.style.textAlign = "center";
-          para2.style.paddingBottom = "80px";
-          para2.appendChild(node2);
-          element.appendChild(para2);
+function loadChat() {
+  docRef.onSnapshot((doc) => {
+    if (doc.exists && window.location.href.includes('?id=')) {
+      document.getElementById("chat").innerHTML = '';
+      document.getElementById("loading").innerHTML = "Chat for School";
+      $('#redirectCheck').fadeIn(0);
+      $('#lowpdiv').fadeIn(0);
+      var lastItem = 0;
+      for(var i = 1; i <= Infinity; i ++) {
+        const para = document.createElement("h3");
+        const node = document.createTextNode(doc.data()[i]);
+        const para1 = document.createElement("h6");
+        const node1 = document.createTextNode(doc.data()[i + "p"]);
+        if (doc.data()[i + "p"] == id) {
+          para.style.textAlign = "right";
+          para1.style.textAlign = "right";
+          para.style.paddingLeft = "8vw";
+          para1.style.paddingLeft = "8vw";
         } else {
-          para.style.paddingBottom = "80px";
+          para.style.paddingRight = "8vw";
+          para1.style.paddingRight = "8vw";
         }
-        $('#msg').fadeIn(0);
-        crtMsg = i + 1;
-        lastItem = i;
-        break;
+        para.appendChild(node);
+        para1.appendChild(node1);
+        const element = document.getElementById("chat");
+        if ("" + doc.data()[i + "p"] == "" + doc.data()[i - 1 + "p"]) {
+          element.appendChild(para);
+        } else {
+          element.appendChild(para1);
+          element.appendChild(para);
+        }
+        if ("" + doc.data()[i + 1] == "undefined") {
+          if (doc.data()[i + "p"].includes("☆") && ("" + Array.from(doc.data()).pop()).includes(doc.data()[i + "p"]) == false) {
+            const para2 = document.createElement("h6");
+            const node2 = document.createTextNode(doc.data()[i + "p"] + ' is a verified moderator');
+            para2.style.textAlign = "center";
+            para2.style.paddingBottom = "80px";
+            para2.appendChild(node2);
+            element.appendChild(para2);
+          } else {
+            para.style.paddingBottom = "80px";
+          }
+          $('#msg').fadeIn(0);
+          crtMsg = i + 1;
+          lastItem = i;
+          break;
+        }
+      }
+      if (doc.data()[lastItem] + "" == sentContent && sent) {
+        sent = false;
+        window.scrollTo(0,document.body.scrollHeight);
+      }
+      if (started) {
+        window.scrollTo(0,document.body.scrollHeight);
+        scrollOffset = document.body.scrollHeight / window.scrollY;
+        started = false;
+      }
+      if (document.body.scrollHeight / scrollOffset - window.scrollY <= window.innerHeight / 5) {
+        window.scrollTo(0,document.body.scrollHeight);
+      }
+    } else {
+      if (isJoin) {
+        window.location.href = "https://chat.jingjingdev.repl.co/";
+      } else {
+        docRef.set({
+          "1": "Chat created by " + id, 
+          "1p": id
+        }, { merge: true });
       }
     }
-    if (doc.data()[lastItem] + "" == sentContent && sent) {
-      sent = false;
-      window.scrollTo(0,document.body.scrollHeight);
-    }
-    if (started) {
-      window.scrollTo(0,document.body.scrollHeight);
-      scrollOffset = document.body.scrollHeight / window.scrollY;
-      started = false;
-    }
-    if (document.body.scrollHeight / scrollOffset - window.scrollY <= window.innerHeight / 5) {
-      window.scrollTo(0,document.body.scrollHeight);
-    }
-  } else {
-    if (isJoin) {
-      window.location.href = "https://chat.jingjingdev.repl.co/";
-    } else {
-      docRef.set({
-        "1": "Chat created by " + id, 
-        "1p": id
-      }, { merge: true });
-    }
-  }
-});
+  });
+}
+
+function checkUser(user) {
+  db.collection("user").doc(user.email).get()
+    .then((doc) => {
+      if (!doc.exists) {
+        if (window.location.pathname != '/') {
+          window.location.href = '.';
+        }
+        document.getElementById('indexMain').innerHTML = '<h4>Create a username</h4>      <br>       <input type="text" id="username" maxlength="20" placeholder="Username" style="width: 200px;   height: 20px;   background-color: #FFFFFF;   border: none;   color: black;   padding: 5px 10px;   text-align: center;   text-decoration: none;   display: inline-block;   border-radius: 6px;   transition-duration: 500ms;">';
+        $('#username').on('keyup', function (e) {
+          if (noSend(document.getElementById("username").value)) {
+            document.getElementById("username").value = "";
+            window.location.href = './no.html';
+            fail;
+          }
+          if (e.key === 'Enter' || e.keyCode === 13) {
+            db.collection("username").doc('default').get().then((doc) => {
+              if (doc.exists && document.getElementById("username").value.toLowerCase().includes("username") == false && document.getElementById("username").value.toLowerCase().includes("invalid") == false && document.getElementById("username").value.toLowerCase().includes("jining") == false && document.getElementById("username").value.toLowerCase().includes("☆") == false && alphanumeric(document.getElementById("username").value)) {
+                for(var i = 1; i <= Infinity; i ++) {
+                  if ("" + doc.data()[i] == "undefined") {
+                    db.collection("user").doc(email).set({
+                      "username": document.getElementById("username").value
+                    }, { merge: true })
+                    .then(() => {
+                      db.collection("username").doc('default').set({
+                        [i]: document.getElementById("username").value
+                      }, { merge: true })
+                      .then(() => {
+                        window.location.href = '.';
+                      });
+                    });
+                    break;
+                  }
+                  if (doc.data()[i] + "" == document.getElementById("username").value) {
+                    document.getElementById("username").value = '';
+                    alert('Username already taken!');
+                    break;
+                  }
+                }
+              } else {
+                document.getElementById("username").value = "";
+                alert('Invalid Username!');
+              }
+            });
+          }
+        });
+      } else {
+        username = doc.data()["username"];
+        id = username;
+        if (window.location.pathname == '/') {
+          document.getElementById('welcome').innerHTML = 'Welcome back, ' + username + '!'
+        } else {
+          loadChat();
+        }
+      }
+    });
+}
 
 function signIn() {
   firebase.auth().signInWithRedirect(provider);
@@ -228,41 +258,8 @@ $('#msg').on('keyup', function (e) {
   }
 });
 
-$('#username').on('keyup', function (e) {
-  if (noSend(document.getElementById("user").value)) {
-    document.getElementById("user").value = "";
-    window.location.href = './no.html';
-    fail;
-  }
-  if (e.key === 'Enter' || e.keyCode === 13) {
-    db.collection("username").doc('default').get().then((doc) => {
-      if (doc.exists && document.getElementById("username").value.toLowerCase().includes("username") == false && document.getElementById("username").value.toLowerCase().includes("invalid") == false && document.getElementById("username").value.toLowerCase().includes("jining") == false && document.getElementById("username").value.toLowerCase().includes("- mod") == false && document.getElementById("username").value.toLowerCase().includes("- dev") == false && document.getElementById("username").value.toLowerCase().includes("☆") == false && alphanumeric(document.getElementById("username").value)) {
-        for(var i = 1; i <= Infinity; i ++) {
-          if ("" + doc.data()[i] == "undefined") {
-            db.collection("username").doc('default').set({
-              [i]: document.getElementById("username").value
-            }, { merge: true });
-            db.collection("user").doc(email).set({
-              'username': document.getElementById("username").value
-            }, { merge: true });
-            window.location.href = '.';
-            break;
-          }
-          if (doc.data()[i] + "" == document.getElementById("username").value) {
-            document.getElementById("username").value = '';
-            alert('Username already taken!');
-            break;
-          }
-        }
-      } else {
-        document.getElementById("user").value = "Invalid Username!"
-      }
-    });
-  }
-});
-
 function modList() {
-  if (document.cookie.includes("- Dev") || document.cookie.includes("- Mod")) {
+  if (username.includes("☆")) {
     document.querySelector('body').innerHTML = '<body>   <div id="chatList" style="margin: 10px; padding: 0;"></div>   <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.1/firebase-app.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.1/firebase-firestore.js"></script> <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> <script src="closed.js"></script> <script src="create.js"></script> <script src="script.js"></script></body>';
     db.collection("chat").get().then((querySnapshot) => {
       const para = document.createElement("a");
@@ -302,7 +299,8 @@ function modList() {
 
 function alphanumeric(inputtxt) {
   var letterNumber = /^[0-9a-zA-Z]+$/;
-  if(inputtxt.match(letterNumber)) {
+  let input = inputtxt.replaceAll(' ', '');
+  if(input.match(letterNumber)) {
     return true;
   } else { 
     return false; 
@@ -314,6 +312,7 @@ function reset() {
     document.getElementById('reset').innerText = 'Reset (Confirm)';
   } else {
     deleteAllCookies();
+    firebase.auth().signOut();
     window.location.href = '.';
   }
 }

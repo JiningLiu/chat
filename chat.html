@@ -13,18 +13,13 @@
     <svg id="loadPanel" style="position: fixed; margin: 0; padding: 0; z-index: 99999; width: 100vw; height: 100vh;">
       <rect style="fill:rgb(0,0,0); stroke-width:0; width: 100vw; height: 100vh;"/>
     </svg>
-    <a href="https://chat.jingjingdev.repl.co/" id="username" style="text-decoration: none; color: white;">Enter Username Below</a>
-    <div id="login">
-      <br>
-      <input type="text" id="user" name="user" maxlength="40" autocomplete="none" placeholder="Username">
-    </div>
     <a href="https://chat.jingjingdev.repl.co/" style="text-decoration: none; color: white; display: none;" id="loading">Loading...</a>
     <h2 id="chatID" style="text-align: right; display: none;">Chat for School</h2>
     <div id="actChat" style="display: none;">
       <div id="chat" style="padding: 0; padding-top: 50px"></div>
       <input type="text" id="msg" name="msg" maxlength="200" placeholder="Message" style="display: none;" autocomplete="none">
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.1/firebase.js" integrity="sha512-xOm7T+n5pRgOd5Da97/0Tuvgwumw9fca80qIlLDJ7+qCvoJNYTpoNESwL3iJR9m8Klrf2W9ocgcTSP60ZUKJvA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.1/firebase-app.min.js" integrity="sha512-Gvs2fg+wkNjydmkwgHwwTkuWlr9Gz0hTjFwJ4InwYwbAA3rtL2kBIHt7YRfwVCdW77QF2Ne2DdHQVCcULM89ig==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.1/firebase-firestore.min.js" integrity="sha512-95HhZKEWw0vxywbO/5CJhf+KJqEDEmXGDeys3ylTMTuW50ccC26GcV7pPhTiYC8fH3jj0i4AwxRdIN5vfoLqmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.1/firebase-auth.min.js" integrity="sha512-GAEvFso2oksY5JFkHlrfLhZgAV6aL48qxnbxPnbKnNLeG/XsU/c0lh/g9gocZ2RtbRx6VDTqspPEy9ixWvbfzw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
