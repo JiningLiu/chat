@@ -10,13 +10,10 @@ div {
   padding-top: 35px;
 }
 
-h6, h3, h2, h4, h5 {
+h6, h3, h2, h4, h5, p {
+  color: white;
   margin: 0;
   padding: 0;
-}
-
-h2, h3, h4, h5 {
-  color: white;
 }
 
 h2, a {
@@ -30,6 +27,28 @@ h2, a {
   border-radius: 10px;
   user-select: none;
   transition: all 500ms;
+}
+
+.aReset {
+  width: auto;
+  background-color: unset;
+  position: unset;
+  padding: unset;
+  font-size: unset;
+  font-weight: unset;
+  margin: unset;
+  border-radius: unset;
+}
+
+.aReset:hover {
+  width: auto;
+  background-color: unset;
+  position: unset;
+  padding: unset;
+  font-size: unset;
+  font-weight: unset;
+  margin: unset;
+  border-radius: unset;
 }
 
 h2:hover, a:hover {
