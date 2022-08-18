@@ -147,7 +147,7 @@ button:hover {
   transition-duration: 500ms;
 }
 
-#msg, #user {
+#user {
   background-color: #FFFFFF;
   border: none;
   color: black;
@@ -156,6 +156,19 @@ button:hover {
   display: inline-block;
   border-radius: 6px;
   transition-duration: 500ms;
+}
+
+#msg {
+  background-color: #FFFFFF;
+  border: none;
+  color: black;
+  padding: 2px;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 6px;
+  transition-duration: 500ms;
+  width: 95%;
+  padding-left: 6.8px;
 }
 
 #join {
