@@ -66,7 +66,7 @@ var script = (function () {
       startDate.getHours() < 8 ||
       startDate.getDay() >= 6
     ) {
-      if (window.location.pathname != "/") {
+      if (window.location.pathname != "/html.html") {
         window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/glitch/index.html";
       }
       document.querySelector("html").innerHTML =
@@ -103,7 +103,7 @@ var script = (function () {
             email = result.user.email;
             checkUser(user);
           } else {
-            if (window.location.pathname != "/") {
+            if (window.location.pathname != "/html.html") {
               window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/glitch/index.html";
             }
             document.getElementById("indexMain").innerHTML =
@@ -211,7 +211,7 @@ var script = (function () {
       .get()
       .then((doc) => {
         if (!doc.exists) {
-          if (window.location.pathname != "/") {
+          if (window.location.pathname != "/html.html") {
             window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/glitch/index.html";
           }
           document.getElementById("indexMain").innerHTML =
@@ -307,7 +307,7 @@ var script = (function () {
               }
             });
           const date = new Date();
-          if (window.location.pathname == "/") {
+          if (window.location.pathname == "/html.html") {
             document.getElementById("welcome").innerHTML =
               "Welcome back, " + username + "!";
             document.getElementById("indexMain").innerHTML =
