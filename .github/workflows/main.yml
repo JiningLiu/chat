@@ -19,6 +19,6 @@ jobs:
         id: pull
         uses: tretuna/sync-branches@1.4.0
         with:
-          GITHUB_TOKEN: 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
+          GITHUB_TOKEN: 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
           FROM_BRANCH: "glitch"
           TO_BRANCH: "release"
