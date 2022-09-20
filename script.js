@@ -1,6 +1,5 @@
 var script = (function () {
   const firebase = window.firebase;
-  console.log(firebase);
   const firebaseConfig = {
     apiKey: "AIzaSyB7VotlTzZKJrqHsK0S7MOB0ORjWfNLb7k",
     authDomain: "school-chat-cbb2e.firebaseapp.com",
