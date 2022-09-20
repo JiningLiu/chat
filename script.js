@@ -1,7 +1,4 @@
-console.log('hi');
-
-import { firebaseApp } from 'https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js';
-console.log(firebaseApp);
+alert('hi');
 
 var script = (function () {
   const firebase = window.firebase;
