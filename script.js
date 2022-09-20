@@ -66,7 +66,7 @@ var script = (function () {
       startDate.getDay() >= 6
     ) {
       if (window.location.pathname != "/html.html") {
-        window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/glitch/index.html";
+        window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
       }
       document.querySelector("html").innerHTML =
         '<!DOCTYPE html> <html lang="en">   <head>     <meta charset="UTF-8">     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <title>CLOSED Chat for School</title>     <style>html, body {   font-size: 115%;   color: white;   font-family: -apple-system, BlinkMacSystemFont, sans-serif;   background: black; }</style>   </head>   <body>     <h1>Chat for School is currently closed!</h1>    <h3>Schedule: </h3>     <ul>    <li>Workdays: 8:00 AM - 6:00 PM CST</li>    <li>Weekend/Holidays: Closed</li>    </ul>    <h3>Starting March 1st, all inactive chat will be deleted by the end of the week!</h3>    <a href="https://docs.google.com/forms/d/e/1FAIpQLSezYZnVTZ8bSO4-f_Rt-UCZhh0gGXSrLverikiKc5zvVOq7Og/viewform?usp=sf_link">Apply for moderator</a>    </body> </html>';
@@ -77,10 +77,10 @@ var script = (function () {
   if (window.location.href.includes("chat.html")) {
     if (window.location.search.includes("?id=")) {
       if (isNaN(window.location.search.replace("?id=", ""))) {
-        window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/glitch/index.html";
+        window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
       }
     } else {
-      window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/glitch/index.html";
+      window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
     }
     document.getElementById("chatID").innerHTML =
       "Chat ID: " + window.location.search.replace("?id=", "");
@@ -103,7 +103,7 @@ var script = (function () {
             checkUser(user);
           } else {
             if (window.location.pathname != "/html.html") {
-              window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/glitch/index.html";
+              window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
             }
             document.getElementById("indexMain").innerHTML =
               '<button style="margin-top: 7px; width: 155px;" onclick="script.signIn()">Sign Up</button>    <br>    <button style="margin-top: 7px; width: 155px;" onclick="script.signIn()">Log In</button>';
@@ -199,7 +199,7 @@ var script = (function () {
         }
       } else {
         alert("Chat doesn't exist!");
-        window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/glitch/index.html";
+        window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
       }
     });
   }
@@ -211,7 +211,7 @@ var script = (function () {
       .then((doc) => {
         if (!doc.exists) {
           if (window.location.pathname != "/html.html") {
-            window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/glitch/index.html";
+            window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
           }
           document.getElementById("indexMain").innerHTML =
             '<h4>Create a username</h4>      <br>       <input type="text" id="username" maxlength="20" placeholder="Username" style="width: 200px;   height: 20px;   background-color: #FFFFFF;   border: none;   color: black;   padding: 5px 10px;   text-align: center;   text-decoration: none;   display: inline-block;   border-radius: 6px;   transition-duration: 500ms;">';
@@ -272,7 +272,7 @@ var script = (function () {
                                 { merge: true }
                               )
                               .then(() => {
-                                window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/glitch/index.html";
+                                window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
                               });
                           });
                         break;
@@ -379,7 +379,7 @@ var script = (function () {
         .then((querySnapshot) => {
           const para = document.createElement("a");
           const node = document.createTextNode("Back");
-          para.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/glitch/index.html";
+          para.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
           para.id = "aRight";
           para.style.color = "white";
           para.style.textAlign = "right";
@@ -477,7 +477,7 @@ var script = (function () {
     } else {
       deleteAllCookies();
       firebase.auth().signOut();
-      window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/glitch/index.html";
+      window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
     }
   }
 
@@ -549,7 +549,7 @@ var script = (function () {
         window.location.search.replace("?id=", "") != "10000000"
       ) {
         docRef.delete().then(() => {
-          window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/glitch/index.html";
+          window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
         });
       } else {
         // delete all chat from user
