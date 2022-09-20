@@ -1,8 +1,10 @@
-// import { firebaseApp } from 'https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js';
-// console.log(firebaseApp);
+console.log('hi');
+
+import { firebaseApp } from 'https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js';
+console.log(firebaseApp);
 
 var script = (function () {
-  // const firebase = window.firebase;
+  const firebase = window.firebase;
   console.log(firebase);
   const firebaseConfig = {
     apiKey: "AIzaSyB7VotlTzZKJrqHsK0S7MOB0ORjWfNLb7k",
