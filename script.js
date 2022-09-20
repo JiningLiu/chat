@@ -1,5 +1,3 @@
-alert('hi');
-
 var script = (function () {
   const firebase = window.firebase;
   console.log(firebase);
