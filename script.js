@@ -66,7 +66,8 @@ var script = (function () {
       startDate.getDay() >= 6
     ) {
       if (window.location.pathname != "/html.html") {
-        window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
+        window.location.href =
+          "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
       }
       document.querySelector("html").innerHTML =
         '<!DOCTYPE html> <html lang="en">   <head>     <meta charset="UTF-8">     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <title>CLOSED Chat for School</title>     <style>html, body {   font-size: 115%;   color: white;   font-family: -apple-system, BlinkMacSystemFont, sans-serif;   background: black; }</style>   </head>   <body>     <h1>Chat for School is currently closed!</h1>    <h3>Schedule: </h3>     <ul>    <li>Workdays: 8:00 AM - 6:00 PM CST</li>    <li>Weekend/Holidays: Closed</li>    </ul>    <h3>Starting March 1st, all inactive chat will be deleted by the end of the week!</h3>    <a href="https://docs.google.com/forms/d/e/1FAIpQLSezYZnVTZ8bSO4-f_Rt-UCZhh0gGXSrLverikiKc5zvVOq7Og/viewform?usp=sf_link">Apply for moderator</a>    </body> </html>';
@@ -77,10 +78,12 @@ var script = (function () {
   if (window.location.href.includes("chat.html")) {
     if (window.location.search.includes("?id=")) {
       if (isNaN(window.location.search.split("?id=")[1])) {
-        window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
+        window.location.href =
+          "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
       }
     } else {
-      window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
+      window.location.href =
+        "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
     }
     document.getElementById("chatID").innerHTML =
       "Chat ID: " + window.location.search.split("?id=")[1];
@@ -103,12 +106,13 @@ var script = (function () {
             checkUser(user);
           } else {
             if (window.location.pathname != "/html.html") {
-              window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
+              window.location.href =
+                "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
             }
             document.getElementById("indexMain").innerHTML =
               '<button style="margin-top: 7px; width: 155px;" onclick="script.signIn()">Sign Up</button>    <br>    <button style="margin-top: 7px; width: 155px;" onclick="script.signIn()">Log In</button>';
             document.getElementById("indexFooter").innerHTML =
-              '<p style="padding-top: 10px; font-weight: 500; font-size: 75%; padding-bottom: 10px">v1.1.4-6 (32) by <a href="https://shorturl.at/ahmR6" class="aReset" style="text-decoration: none; color: lightgray;">Candice</a></p><a class="aReset" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>';
+              '<p style="padding-top: 10px; font-weight: 500; font-size: 75%; padding-bottom: 10px">v1.1.4-7 (33) by <a href="https://shorturl.at/ahmR6" class="aReset" style="text-decoration: none; color: lightgray;">Candice</a></p><a class="aReset" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>';
           }
         });
     }
@@ -199,7 +203,8 @@ var script = (function () {
         }
       } else {
         alert("Chat doesn't exist!");
-        window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
+        window.location.href =
+          "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
       }
     });
   }
@@ -211,14 +216,16 @@ var script = (function () {
       .then((doc) => {
         if (!doc.exists) {
           if (window.location.pathname != "/html.html") {
-            window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
+            window.location.href =
+              "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
           }
           document.getElementById("indexMain").innerHTML =
             '<h4>Create a username</h4>      <br>       <input type="text" id="username" maxlength="20" placeholder="Username" style="width: 200px;   height: 20px;   background-color: #FFFFFF;   border: none;   color: black;   padding: 5px 10px;   text-align: center;   text-decoration: none;   display: inline-block;   border-radius: 6px;   transition-duration: 500ms;">';
           $("#username").on("keyup", function (e) {
             if (noSend(document.getElementById("username").value)) {
               document.getElementById("username").value = "";
-              window.location.href = window.location.href.replace('/index.html', '') + "/no.html";
+              window.location.href =
+                window.location.href.replace("/index.html", "") + "/no.html";
               fail;
             }
             if (e.key === "Enter" || e.keyCode === 13) {
@@ -272,7 +279,8 @@ var script = (function () {
                                 { merge: true }
                               )
                               .then(() => {
-                                window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
+                                window.location.href =
+                                  "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
                               });
                           });
                         break;
@@ -306,13 +314,13 @@ var script = (function () {
               }
             });
           const date = new Date();
-          if (window.location.pathname == "/html.html") {
+          if (window.location.search.split('?id=')[1]) {
             document.getElementById("welcome").innerHTML =
               "Welcome back, " + username + "!";
             document.getElementById("indexMain").innerHTML =
               '<button onclick="script.create()" style="transform: scale(1.25); width: 124px; margin-bottom: 10px;">Create a chat</button>       <br>       <input type="text" id="join" class="join" maxlength="8" placeholder="8-digit ID">       <button onclick="script.join()">Join</button>       <br>       <button style="margin-top: 7px; width: 155px;" onclick="window.location.href = window.location.href.replace(\'/index.html\', \'\') + \'/chat.html?id=10000000\'">Public Chat Room</button>       <br>       <button style="margin-top: 7px; width: 155px;" onclick="window.location.href = window.location.href.replace(\'/index.html\', \'\') + \'/chat.html?id=10000001\'">Report</button>';
             document.getElementById("indexFooter").innerHTML =
-              '<button onclick="script.reset()" id="reset">Sign Out</button><p style="padding-top: 10px; font-weight: 500; font-size: 75%; padding-bottom: 10px">v1.1.4-6 (32) by <a href="https://shorturl.at/ahmR6" class="aReset" style="text-decoration: none; color: lightgray;">Candice</a></p><a class="aReset" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>';
+              '<button onclick="script.reset()" id="reset">Sign Out</button><p style="padding-top: 10px; font-weight: 500; font-size: 75%; padding-bottom: 10px">v1.1.4-7 (33) by <a href="https://shorturl.at/ahmR6" class="aReset" style="text-decoration: none; color: lightgray;">Candice</a></p><a class="aReset" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>';
             $("#join").on("keyup", function (e) {
               if (e.key === "Enter" || e.keyCode === 13) {
                 join();
@@ -338,7 +346,8 @@ var script = (function () {
       } else {
         if (noSend(document.getElementById("msg").value)) {
           document.getElementById("msg").value = "";
-          window.location.href = window.location.href.replace('/index.html', '') + "/no.html";
+          window.location.href =
+            window.location.href.replace("/index.html", "") + "/no.html";
           fail;
         }
         docRef
@@ -379,7 +388,8 @@ var script = (function () {
         .then((querySnapshot) => {
           const para = document.createElement("a");
           const node = document.createTextNode("Back");
-          para.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
+          para.href =
+            "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
           para.id = "aRight";
           para.style.color = "white";
           para.style.textAlign = "right";
@@ -398,7 +408,10 @@ var script = (function () {
             if (doc.id != 10000000 && doc.id != 10000001) {
               const para = document.createElement("a");
               const node = document.createTextNode(doc.id);
-              para.href = window.location.href.replace('/index.html', '') + "/chat.html?id=" + doc.id;
+              para.href =
+                window.location.href.replace("/index.html", "") +
+                "/chat.html?id=" +
+                doc.id;
               para.style.color = "white";
               para.style.textDecoration = "none";
               para.style.margin = 0;
@@ -432,7 +445,10 @@ var script = (function () {
         { merge: true }
       )
       .then(() => {
-        window.location.href = window.location.href.replace('/index.html', '') + "/chat.html?id=" + createdID;
+        window.location.href =
+          window.location.href.replace("/index.html", "") +
+          "/chat.html?id=" +
+          createdID;
       });
   }
 
@@ -448,7 +464,9 @@ var script = (function () {
         .then((doc) => {
           if (doc.exists) {
             window.location.href =
-              window.location.href + "/chat.html?id=" + document.getElementById("join").value;
+              window.location.href +
+              "/chat.html?id=" +
+              document.getElementById("join").value;
           } else {
             document.getElementById("join").value = "";
             alert("Chat doesn't exist!");
@@ -477,7 +495,8 @@ var script = (function () {
     } else {
       deleteAllCookies();
       firebase.auth().signOut();
-      window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
+      window.location.href =
+        "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
     }
   }
 
@@ -549,7 +568,8 @@ var script = (function () {
         window.location.search.split("?id=")[1] != "10000000"
       ) {
         docRef.delete().then(() => {
-          window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
+          window.location.href =
+            "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
         });
       } else {
         // delete all chat from user
