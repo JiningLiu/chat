@@ -1,5 +1,5 @@
 var script = (function () {
-  const version = 'v1.1.5 (37)';
+  const version = 'v1.1.5-1 (38)';
   
   const firebase = window.firebase;
   const firebaseConfig = {
@@ -573,10 +573,20 @@ var script = (function () {
       const deleteVal = command.replace("!cmd/delete ", "");
       if (deleteVal == "user") {
         // delete all rooms created by user
-      } else if (window.location.search.split("?id=")[1] != "10000000") {
-        docRef.delete().then(() => {
-          window.location.href =
-            "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
+      } else if (window.location.search.split("?id=")[1] != "10000000" && window.location.search.split("?id=")[1] != "10000001") {
+        docRef.set(
+          {
+            1: "Chat cleared by " + id,
+            "1p": "Chat for School Moderators",
+          },
+          { merge: false }
+        ).then(() => {
+          docRef.delete().then(() => {
+            window.location.href =
+              "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
+          }).catch((error) => {
+            alert("Error removing document: ", error);
+          });
         });
       }
       return;
