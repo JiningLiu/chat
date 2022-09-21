@@ -1,5 +1,5 @@
 var script = (function () {
-  const version = 'v1.1.4-10 (36)';
+  const version = 'v1.1.5 (37)';
   
   const firebase = window.firebase;
   const firebaseConfig = {
@@ -569,18 +569,15 @@ var script = (function () {
         });
       return;
     }
-    if (command.includes("!cmd/delete ")) {
+    if (command.includes("!cmd/delete")) {
       const deleteVal = command.replace("!cmd/delete ", "");
-      if (
-        deleteVal == "chat" &&
-        window.location.search.split("?id=")[1] != "10000000"
-      ) {
+      if (deleteVal == "user") {
+        // delete all rooms created by user
+      } else if (window.location.search.split("?id=")[1] != "10000000") {
         docRef.delete().then(() => {
           window.location.href =
             "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
         });
-      } else {
-        // delete all chat from user
       }
       return;
     }
