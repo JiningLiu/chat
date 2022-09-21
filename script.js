@@ -112,14 +112,17 @@ var script = (function () {
             document.getElementById("indexMain").innerHTML =
               '<button style="margin-top: 7px; width: 155px;" onclick="script.signIn()">Sign Up</button>    <br>    <button style="margin-top: 7px; width: 155px;" onclick="script.signIn()">Log In</button>';
             document.getElementById("indexFooter").innerHTML =
-              '<p style="padding-top: 10px; font-weight: 500; font-size: 75%; padding-bottom: 10px">v1.1.4-8 (34) by <a href="https://shorturl.at/ahmR6" class="aReset" style="text-decoration: none; color: lightgray;">Candice</a></p><a class="aReset" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>';
+              '<p style="padding-top: 10px; font-weight: 500; font-size: 75%; padding-bottom: 10px">v1.1.4-9 (35) by <a href="https://shorturl.at/ahmR6" class="aReset" style="text-decoration: none; color: lightgray;">Candice</a></p><a class="aReset" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>';
           }
         });
     }
   });
 
   
-  $(document.body).append('<button id="notifyBtn" onclick="script.notifyRequest()"></button>');
+  $(document.body).append('<button id="notifyBtn"></button>');
+  $("#notifyBtn").click(function(e) {
+    notifyRequest();
+  });
   $('#notifyBtn').click();
 
   function loadChat() {
@@ -322,7 +325,7 @@ var script = (function () {
             document.getElementById("indexMain").innerHTML =
               '<button onclick="script.create()" style="transform: scale(1.25); width: 124px; margin-bottom: 10px;">Create a chat</button>       <br>       <input type="text" id="join" class="join" maxlength="8" placeholder="8-digit ID">       <button onclick="script.join()">Join</button>       <br>       <button style="margin-top: 7px; width: 155px;" onclick="window.location.href = window.location.href.replace(\'/index.html\', \'\') + \'/chat.html?id=10000000\'">Public Chat Room</button>       <br>       <button style="margin-top: 7px; width: 155px;" onclick="window.location.href = window.location.href.replace(\'/index.html\', \'\') + \'/chat.html?id=10000001\'">Report</button>';
             document.getElementById("indexFooter").innerHTML =
-              '<button onclick="script.reset()" id="reset">Sign Out</button><p style="padding-top: 10px; font-weight: 500; font-size: 75%; padding-bottom: 10px">v1.1.4-8 (34) by <a href="https://shorturl.at/ahmR6" class="aReset" style="text-decoration: none; color: lightgray;">Candice</a></p><a class="aReset" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>';
+              '<button onclick="script.reset()" id="reset">Sign Out</button><p style="padding-top: 10px; font-weight: 500; font-size: 75%; padding-bottom: 10px">v1.1.4-9 (35) by <a href="https://shorturl.at/ahmR6" class="aReset" style="text-decoration: none; color: lightgray;">Candice</a></p><a class="aReset" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>';
             $("#join").on("keyup", function (e) {
               if (e.key === "Enter" || e.keyCode === 13) {
                 join();
@@ -609,6 +612,5 @@ var script = (function () {
     signIn: signIn,
     reset: reset,
     resetPublicRooms: resetPublicRooms,
-    notifyRequest: notifyRequest
   };
 })();
