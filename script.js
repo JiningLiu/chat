@@ -1,5 +1,5 @@
 var script = (function () {
-  const version = 'v1.1.5-1 (38)';
+  const version = 'v1.1.5-2 (39)';
   
   const firebase = window.firebase;
   const firebaseConfig = {
@@ -32,6 +32,10 @@ var script = (function () {
   var crtMsg = 0;
   var email = "";
   var username = "";
+  
+  if (!window.location.search.includes("?url=")) {
+    window.location.href = "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
+  }
 
   function resetPublicRooms(date, reportOnly) {
     if (username.includes(" ☆")) {
@@ -472,7 +476,7 @@ var script = (function () {
         .then((doc) => {
           if (doc.exists) {
             window.location.href =
-              window.location.href +
+              window.location.href.replace('/index.html', '') +
               "/chat.html?id=" +
               document.getElementById("join").value;
           } else {
