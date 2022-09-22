@@ -1,5 +1,5 @@
 var script = (function () {
-  const version = 'v1.1.5-3 (40)';
+  const version = 'v1.1.5-4 (41)';
   
   const firebase = window.firebase;
   const firebaseConfig = {
