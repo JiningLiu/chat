@@ -1,5 +1,5 @@
 var script = (function () {
-  const version = 'v1.1.5-2 (39)';
+  const version = 'v1.1.5-3 (40)';
   
   const firebase = window.firebase;
   const firebaseConfig = {
@@ -116,11 +116,27 @@ var script = (function () {
                 "https://githubpreview.github.io/html.html?url=https://github.com/JiningLiu/chat/blob/release/index.html";
             }
             document.getElementById("indexMain").innerHTML =
-              '<button style="margin-top: 7px; width: 155px;" onclick="script.signIn()">Sign Up</button>    <br>    <button style="margin-top: 7px; width: 155px;" onclick="script.signIn()">Log In</button>';
+              `
+              <div class="row">
+                <div class="col-md-3">
+                  <button class="btn btn-outline-dark" onclick="script.signIn()" style="text-transform:none">
+                    <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                    Login with Google
+                  </button>
+                </div>
+              </div>
+              `;
             document.getElementById("indexFooter").innerHTML =
               '<p style="padding-top: 10px; font-weight: 500; font-size: 75%; padding-bottom: 10px">' + version + ' by <a href="https://shorturl.at/ahmR6" class="aReset" style="text-decoration: none; color: lightgray;">Candice</a></p><a class="aReset" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>';
           }
         });
+    }
+  });
+  
+  db.collection("ban").doc(username).onSnapshot((doc) => {
+    if (doc.exists && doc.data()["banned"]) {
+      document.querySelector("html").innerHTML =
+        '<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>CFS - BAN</title> </head> <body> <h1 style="font-size: 69px; margin: 0; padding: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">ur banned get good</h1> </body> </html>';
     }
   });
 
@@ -522,7 +538,7 @@ var script = (function () {
     }
   }
 
-  const bannedWords = ["nigger", "penis", "cock", "uwu"];
+  const bannedWords = ["nigger", "penis", "cock", "uwu", "kys"];
 
   function noSend(word) {
     for (var i = 0; i <= bannedWords.length - 1; i++) {
