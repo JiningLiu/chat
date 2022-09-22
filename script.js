@@ -1,5 +1,5 @@
 var script = (function () {
-  const version = 'v1.1.5-4 (41)';
+  const version = 'v1.1.5-5 (42)';
   
   const firebase = window.firebase;
   const firebaseConfig = {
@@ -130,13 +130,6 @@ var script = (function () {
               '<p style="padding-top: 10px; font-weight: 500; font-size: 75%; padding-bottom: 10px">' + version + ' by <a href="https://shorturl.at/ahmR6" class="aReset" style="text-decoration: none; color: lightgray;">Candice</a></p><a class="aReset" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>';
           }
         });
-    }
-  });
-  
-  db.collection("ban").doc(username).onSnapshot((doc) => {
-    if (doc.exists && doc.data()["banned"]) {
-      document.querySelector("html").innerHTML =
-        '<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>CFS - BAN</title> </head> <body> <h1 style="font-size: 69px; margin: 0; padding: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">ur banned get good</h1> </body> </html>';
     }
   });
 
@@ -332,15 +325,12 @@ var script = (function () {
         } else {
           username = doc.data()["username"];
           id = username;
-          db.collection("ban")
-            .doc(username)
-            .get()
-            .then((doc) => {
-              if (doc.exists && doc.data()["banned"]) {
-                document.querySelector("html").innerHTML =
-                  '<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>CFS - BAN</title> </head> <body> <h1 style="font-size: 69px; margin: 0; padding: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">ur banned get good</h1> </body> </html>';
-              }
-            });
+          db.collection("ban").doc(username).onSnapshot((doc) => {
+            if (doc.exists && doc.data()["banned"]) {
+              document.querySelector("html").innerHTML =
+                '<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>CFS - BAN</title> </head> <body> <h1 style="font-size: 69px; margin: 0; padding: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">ur banned get good</h1> </body> </html>';
+            }
+          });
           const date = new Date();
           if (!window.location.search.split("?id=")[1]) {
             document.getElementById("welcome").innerHTML =
